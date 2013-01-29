@@ -1,0 +1,16 @@
+# Emperor uWSGI Upstart script
+# This file is managed by Chef for <%= node['fqdn'] %>
+
+description "uWSGI Emperor"
+
+start on [2345]
+stop on runlevel [06]
+
+respawn
+respawn limit 10 5
+
+exec uwsgi \
+  --master \
+  --die-on-term \
+  --logto "<%= @log_path %>" \
+  --emperor "<%= @config_path %>"
